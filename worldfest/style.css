@@ -13,6 +13,55 @@
     left: 0;
     background: #f0fbf7;
 }
+#logo {
+    position: absolute;
+    top: 50px;
+    left: 5%;
+    font-size: 20px;
+    color: #01ce69;
+    font-weight: bolder;
+}
+
+
+#navbar {
+    height: 60px;
+    width: 925px;
+    position: absolute;
+    top: 50px;
+    right: 5%;
+    border-radius: 20px;
+    z-index: 999;
+    overflow: hidden;
+}
+
+#navbar ul {
+    height: 100%;
+    width: 965px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+#navbar ul li a {
+    height: 100%;
+    width: auto;
+    margin: 0 70px;
+    font-size: 25px;
+    margin-left: 0;
+    display: grid;
+    place-items: center;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #000;
+}
+
+#navbar ul li a:hover {
+    color: #01ce69;
+    border-bottom: 2px solid #01ce69;
+    width: calc(100% - 150px);
+}
+
 
 
 /* circle css*/
