@@ -1,0 +1,148 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+#container {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    background: #f0fbf7;
+}
+
+
+/* circle css*/
+#circle {
+    height: 800px;
+    width: 800px;
+    border-radius: 50%;
+    background: #01ce6915;
+    position: absolute;
+    left: 2%;
+    bottom: 9%;
+}
+
+/* side image css */
+#sideImage {
+    
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+/* content css */
+#content {
+    height: auto;
+    width: 700px;
+    position: absolute;
+    right: 11%;
+    top: calc(50% - 215px);
+}
+
+#content h2 {
+    font-size: 85px;
+    color: #01ce69;
+}
+
+#content p {
+    font-size: 18px;
+}
+
+#content button {
+    height: 65px;
+    width: 210px;
+    border: none;
+    outline: none;
+    border-radius: 70px;
+    margin: 20px 0;
+    font-size: 20px;
+    background: #01ce69;
+    color: #fff;
+    cursor: pointer;
+}
+
+#content button:hover {
+    color: #01ce69;
+    border: 2px solid #01ce69;
+    background: transparent;
+}
+
+.wrapper {
+    background-image: linear-gradient(to top, #c3d1cb, #a1d4bd, #7ed6ac, #56d797, #0dd77f);
+    text-align: center
+  }
+.text {
+  font-size: x-large
+
+}
+
+/* social media accounts Links */
+#socialLinks {
+    position: absolute;
+    bottom: 5%;
+    right: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+#socialLinks a {
+    text-decoration: none;
+    margin: 12px 0;
+}
+
+#socialLinks a i {
+    height: 50px;
+    width: 50px;
+    margin: 0 20px;
+    font-size: 20px;
+    color: #dce8f7;
+    background: #01ce69;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+}
+
+#socialLinks a i:hover {
+    background: transparent;
+    color: #01ce69;
+    border: 2px solid #01ce69;
+}
+
+/* animated music icon */
+#music {
+    background: #01ce69;
+    height: 90px;
+    width: 90px;
+    position: absolute;
+    bottom: 0px;
+    right: 20%;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    border: 2px solid #01ce69;
+    /* linked animation */
+    animation: animate 6s ease-in-out infinite;
+}
+
+/* animatin for music icon */
+@keyframes animate {
+    0%,100% {
+        background: #01ce69;
+        color: #fff;
+        right: 20%;
+    }
+
+    50% {
+        background: #01ce6900;
+        color: #01ce69;
+        right: 25%;
+    }
+}
+
+
+
