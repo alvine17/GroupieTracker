@@ -33,7 +33,10 @@ func main() {
 			selectedArtist,
 		})
 	})
-
+	http.HandleFunc("/artists", func(w http.ResponseWriter, r *http.Request) {
+		tmpl2 := template.Must(template.ParseFiles("./static/artists.html"))
+		tmpl2.Execute(w, global)
+	})
 	http.ListenAndServe(":8080", nil)
 
 }
