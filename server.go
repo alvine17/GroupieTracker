@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -16,6 +17,17 @@ type Artists []struct {
 	Image   string
 	Name    string
 	Members []string
+	// Dates   []string
+}
+
+//	type Planning struct {
+//		Dates []Dates
+//	}
+type Dates struct {
+	Index []struct {
+		ID    int      `json:"id"`
+		Dates []string `json:"dates"`
+	} `json:"index"`
 }
 
 func main() {
@@ -35,8 +47,14 @@ func main() {
 		tmpl2.Execute(w, global)
 	})
 
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/planning", func(w http.ResponseWriter, r *http.Request) {
+		tmpl3 := template.Must(template.ParseFiles("./static/planning.html"))
+		dates := callDate()
+		fmt.Println(dates.Index)
+		tmpl3.Execute(w, dates)
+	})
 
+	http.ListenAndServe(":8080", nil)
 }
 
 func callAPI() Artists {
@@ -50,11 +68,33 @@ func callAPI() Artists {
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
-
+	// fmt.Println(string(body))
 	if err != nil {
 		log.Fatal(err)
 	}
 	json.Unmarshal(body, &artist)
-
+	// fmt.Println(artist)
 	return artist
+}
+
+func callDate() Dates {
+	response, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
+	var dates Dates
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer response.Body.Close()
+
+	body, err := ioutil.ReadAll(response.Body)
+	// fmt.Println(string(body))
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	json.Unmarshal(body, &dates)
+	// fmt.Println(dates)
+
+	return dates
 }
