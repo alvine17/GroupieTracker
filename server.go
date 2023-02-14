@@ -9,8 +9,12 @@ import (
 )
 
 type Artist struct {
-	Membre string
+	Id     int
+	Image  string
+	Name   string
+	Membre []string
 }
+
 type Artists []struct {
 	Id      int
 	Image   string
