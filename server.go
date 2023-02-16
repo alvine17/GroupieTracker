@@ -87,3 +87,7 @@ func selectArtist(artists Artists, name string) Artist {
 	}
 	return selectedArtist
 }
+
+
+
+
