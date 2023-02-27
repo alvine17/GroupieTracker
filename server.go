@@ -37,7 +37,6 @@ func main() {
 		selectedArtist3 := selectArtist(global, "Rihanna")
 		selectedArtist4 := selectArtist(global, "Katy Perry")
 		selectedArtist5 := selectArtist(global, "Imagine Dragons")
-		fmt.Println(selectedArtist3)
 
 		tmpl := template.Must(template.ParseFiles("./static/index.html"))
 
