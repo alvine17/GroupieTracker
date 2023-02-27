@@ -10,11 +10,12 @@ import (
 )
 
 type Artist struct {
-	Id      int
-	Image   string
-	Name    string
-	Members []string
+	Id     int
+	Image  string
+	Name   string
+	Membre []string
 }
+
 type Artists []Artist
 
 func main() {
@@ -76,18 +77,3 @@ func callAPI() Artists {
 
 	return artist
 }
-
-func selectArtist(artists Artists, name string) Artist {
-	var selectedArtist Artist
-	for _, artist := range artists {
-		if artist.Name == name {
-			selectedArtist = artist
-			break
-		}
-	}
-	return selectedArtist
-}
-
-
-
-
