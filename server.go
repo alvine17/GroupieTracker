@@ -56,6 +56,11 @@ func main() {
 		tmpl3 := template.Must(template.ParseFiles("./static/description.html"))
 		tmpl3.Execute(w, global)
 	})
+	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query().Get("query")
+		fmt.Println("Recherche de l'artiste : ", query)
+	})
+
 	http.ListenAndServe(":8080", nil)
 
 }
