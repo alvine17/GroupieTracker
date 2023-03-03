@@ -14,28 +14,44 @@
           </ul>
       </div>
     </div>
+    <div class="slidecontainer">
+        <p>First Album :</p> 
+        <input type="range" value="25">
+      </div>
+      <div class="box">
+        Creation Date
+        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+  <label for="vehicle1"> 1950 </label><br>
+  <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+  <label for="vehicle2"> 1980</label><br>
+  <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+  <label for="vehicle3"> 1990 </label><br><br>
+  <input type="checkbox" id="vehicle4" name="vehicle3" value="Boat">
+  <label for="vehicle4"> 2000 </label><br><br>
+  <input type="checkbox" id="vehicle4" name="vehicle3" value="Boat">
+  <label for="vehicle4"> 2010+ </label><br><br>
+      </div>
 
-    <form action="/search" method="GET">
-        <input type="text" name="query" placeholder="Recherchez un artiste...">
-        <button type="submit">Rechercher</button>
-      </form>
+      <form action="/search" method="GET">
+    <input type="text" name="query" placeholder="Recherchez un artiste...">
+    <button type="submit">Rechercher</button>
+  </form>
 
-    <form action="/description" method="post">
-   <div class="lesimages">
-    {{range .}}
-    <button name="Id" value="{{.Image}}">
-    <div class="image-container">
-      <img src="{{.Image}}" alt="{{.Name}}">
-      <div class="image-text">{{.Name}}</div>
-    </div>
-    {{end}}
-</button>
-    </div>
-    </div>
-</form>
+  <form action="/description" method="get">
+    <div class="lesimages">
+     {{range .}}
+     <button name="id" value="{{.Id}}">
+     <div class="image-container">
+       <img src="{{.Image}}" alt="{{.Name}}" value="{{.Name}}">
+       <div class="image-text">{{.Name}}</div>
+     </div>
+     </button>
+     {{end}}
+     </div>
+ </form>
+</body>
+</html>
 
-  
-    
 
 <footer class="footer">
         <div class="container">
@@ -69,3 +85,7 @@
     </footer>
 </body>
 </html>
+
+
+
+

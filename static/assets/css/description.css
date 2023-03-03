@@ -1,0 +1,19 @@
+.text{
+    text-align: center;
+    margin-top: auto;
+}
+
+
+.rectangle{
+    /* border-style: solid; */
+    margin: 0 auto;
+    width: 100px;
+   width: 50%;
+   height: 70%;
+   border-style: solid;
+}
+
+
+/* img{
+    margin-left: 10%;
+} */
