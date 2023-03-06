@@ -10,19 +10,23 @@ import (
 )
 
 type Artist struct {
-	Id      int
-	Image   string
-	Name    string
-	Members []string
+	Id           int
+	Image        string
+	Name         string
+	Members      []string
+	CreationDate int
+	FirstAlbum   string
+	ConcertDate  string
+	Relation     string
 }
 type Artists []Artist
 
 func main() {
+
 	fmt.Printf("Starting server at port 8080\n")
 	fs := http.FileServer(http.Dir("static/"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	global := callAPI()
-
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		selectedArtist := selectArtist(global, "Kendrick Lamar")
 		selectedArtist2 := selectArtist(global, "XXXTentacion")
@@ -53,9 +57,39 @@ func main() {
 		tmpl2.Execute(w, global)
 	})
 	http.HandleFunc("/description", func(w http.ResponseWriter, r *http.Request) {
+		// Récupérer l'ID de l'artiste sélectionné à partir des paramètres de requête
+		selectedArtistID := r.URL.Query().Get("id")
+
+		// Appeler l'API pour récupérer les informations sur l'artiste
+		response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists/" + selectedArtistID)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer response.Body.Close()
+
+		// Lire le corps de la réponse
+		body, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Désérialiser la réponse JSON dans une structure Artist
+		var artist Artist
+		err = json.Unmarshal(body, &artist)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Charger le template HTML pour la description de l'artiste
 		tmpl3 := template.Must(template.ParseFiles("./static/description.html"))
-		tmpl3.Execute(w, global)
+
+		// Exécuter le template en envoyant les informations sur l'artiste à la page HTML
+		err = tmpl3.Execute(w, artist)
+		if err != nil {
+			log.Fatal(err)
+		}
 	})
+
 	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query().Get("query")
 		fmt.Println("Recherche de l'artiste : ", query)
