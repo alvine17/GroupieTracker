@@ -95,6 +95,8 @@ func main() {
 		fmt.Println("Recherche de l'artiste : ", query)
 	})
 
+	http.HandleFunc("/contact", contactHandler)
+
 	http.ListenAndServe(":8080", nil)
 
 }
@@ -128,4 +130,23 @@ func selectArtist(artists Artists, name string) Artist {
 		}
 	}
 	return selectedArtist
+}
+
+func contactHandler(w http.ResponseWriter, r *http.Request) {
+	r.Method = "POST"
+	// Getting the data of the form
+	name := r.FormValue("name")
+	email := r.FormValue("email")
+	phone := r.FormValue("phone")
+	message := r.FormValue("message")
+
+	// Print data in terminal
+	fmt.Println("Name:", name)
+	fmt.Println("Email:", email)
+	fmt.Println("Phone:", phone)
+	fmt.Println("Message:", message)
+
+	// New page, when data are submitted
+	fmt.Fprintf(w, "<h1>Thank you for contacting us!</h1>")
+
 }
