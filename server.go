@@ -147,6 +147,6 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Message:", message)
 
 	// New page, when data are submitted
-	fmt.Fprintf(w, "<h1>Thank you for contacting us!</h1>")
-
+	//fmt.Fprintf(w, "<h1>Thank you for contacting us!</h1>")
+	http.Redirect(w, r, "/static/thanks.html", http.StatusSeeOther)
 }
