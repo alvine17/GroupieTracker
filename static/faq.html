@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FAQ</title>
+    <link rel="stylesheet" type="text/css" href="/static/assets/css/faq.css">
+  </head>
+  <body>
+ 
+   
+<div class="containerFluid">
+    <h2>Frequently Asked Questions(FAQ)</h2>
+    <div class="accordion">
+      <div class="icon"></div>
+      <h5>Who is behind this website ?</h5>
+    </div>
+    <div class="panel">
+      <p>
+       We are 3 students, from Lyon Ynov Campus. </br>
+       Respectively  <a href="https://klockdev.wordpress.com/" target="_blank" title="Personal Website">Rony Klock</a>, 
+       <a href="https://www.instagram.com/envel.rgn/" target="_blank" title="Instagram">Envel Righini</a> 
+       and <a href="https://www.linkedin.com/in/alvine-mpanzu-54429b22b/" target="_blank" title="LinkedIn" >Mpanzu Alvine</a>.
+      </p>
+    </div>
+  
+    <div class="accordion">
+      <div class="icon"></div>
+      <h5>What did we learn during the project ?</h5>
+    </div>
+    <div class="panel">
+      <p>
+        Rony : Lorem ipsum dolor sit amet consectetur adipisicing elit.</br> 
+        Repellat optio eligendi maiores et placeat tempore reprehenderit.</br>
+    </br> Envel : Lorem ipsum dolor sit amet consectetur adipisicing elit.</br> 
+        Repellat optio eligendi maiores et placeat tempore reprehenderit.</br>
+    </br>Alvine : Lorem ipsum dolor sit amet consectetur adipisicing elit.</br> 
+        Repellat optio eligendi maiores et placeat tempore reprehenderit.</br> </br>
+
+      </p>
+    </div>
+  
+    <div class="accordion">
+      <div class="icon"></div>
+      <h5>Did we enjoyed working on Groupie Tracker ?</h5>
+    </div>
+    <div class="panel">
+      <p>
+        Envel : Lorem ipsum dolor sit amet consectetur adipisicing elit.</br> 
+        Repellat optio eligendi maiores et placeat tempore reprehenderit.</br>
+    </br> Alvine : Lorem ipsum dolor sit amet consectetur adipisicing elit.</br> 
+        Repellat optio eligendi maiores et placeat tempore reprehenderit.</br>
+    </br>Rony : Lorem ipsum dolor sit amet consectetur adipisicing elit.</br> 
+        Repellat optio eligendi maiores et placeat tempore reprehenderit.</br> </br>
+
+      </p>
+    </div>
+  </div>
+ </div>
+ 
+
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    var len = acc.length;
+        for (i = 0; i < len; i++) {
+         acc[i].addEventListener("click", function () {
+         this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                 panel.style.maxHeight = null;
+     } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+     });
+    }
+
+  </script>
+</body>
+</html>
