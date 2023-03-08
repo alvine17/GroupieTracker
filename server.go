@@ -18,11 +18,29 @@ type Artist struct {
 
 type Artists []Artist
 
+// type location []Locations
+type Locationss struct {
+	Index []Locations
+}
+type Datess struct {
+	Index []Dates
+}
+
+// type Locations struct {
+// 	Index []locations
+// }
+
 type Dates struct {
-	Index []struct {
-		ID    int      `json:"id"`
-		Dates []string `json:"dates"`
-	} `json:"index"`
+	ID    int      `json:"id"`
+	Dates []string `json:"dates"`
+}
+type Locations struct {
+	ID        int      `json:"id"`
+	Locations []string `json:"locations"`
+}
+type Datelocation struct {
+	Dates     Datess
+	Locations Locationss
 }
 
 func main() {
@@ -64,12 +82,45 @@ func main() {
 	http.HandleFunc("/planning", func(w http.ResponseWriter, r *http.Request) {
 		tmpl3 := template.Must(template.ParseFiles("./static/planning.html"))
 		dates := callDate()
-		fmt.Println(dates.Index)
-		tmpl3.Execute(w, dates)
+		locations := callLocation()
+		Datelocation := Datelocation{
+			Dates:     dates,
+			Locations: locations,
+		}
+		fmt.Println(dates)
+		tmpl3.Execute(w, Datelocation)
+
 	})
+
+	// http.HandleFunc("/location", func(w http.ResponseWriter, r *http.Request) {
+
+	// 	tmpl4 := template.Must(template.ParseFiles(".static/planning.html"))
+	// 	locations := callLocation()
+	// 	// fmt.Println(locations.Index)
+	// 	tmpl4.Execute(w, locations)
+	// })
 
 	http.ListenAndServe(":8080", nil)
 
+}
+
+func callLocation() Locationss {
+	response, err := http.Get("https://groupietrackers.herokuapp.com/api/locations")
+	var locations Locationss
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer response.Body.Close()
+
+	body, err := ioutil.ReadAll(response.Body)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	json.Unmarshal(body, &locations)
+	return locations
 }
 
 func callAPI() Artists {
@@ -92,9 +143,9 @@ func callAPI() Artists {
 	return artist
 }
 
-func callDate() Dates {
+func callDate() Datess {
 	response, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
-	var dates Dates
+	var dates Datess
 
 	if err != nil {
 		log.Fatal(err)
@@ -103,7 +154,6 @@ func callDate() Dates {
 	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
-	// fmt.Println(string(body))
 
 	if err != nil {
 		log.Fatal(err)
