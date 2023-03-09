@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"text/template"
 )
 
@@ -19,7 +20,18 @@ type Artist struct {
 	ConcertDate  string
 	Relation     string
 }
+
 type Artists []Artist
+
+type Relations struct {
+	Index []Relation
+}
+
+type Relation struct {
+	ID             int                 `json:"id"`
+	DatesLocations map[string][]string `json:"datesLocations"`
+	RelArtist      Artist
+}
 
 func main() {
 
@@ -53,52 +65,104 @@ func main() {
 		})
 	})
 	http.HandleFunc("/artists", func(w http.ResponseWriter, r *http.Request) {
-		tmpl2 := template.Must(template.ParseFiles("./static/artists.html"))
-		tmpl2.Execute(w, global)
+		q := r.URL.Query()
+		creationDates, ok := q["creation_date"]
+
+		// Filtrage des artistes selon les années de création
+		filteredArtists := global
+		if ok {
+			for _, year := range creationDates {
+				startYear, _ := strconv.Atoi(year)
+				filteredArtists = FilterArtistsByYear(filteredArtists, startYear)
+			}
+		}
+
+		// Génération du template HTML avec les artistes filtrés
+		tmpl2, err := template.ParseFiles("./static/artists.html")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		err = tmpl2.Execute(w, filteredArtists)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		http.HandleFunc("/planning", func(w http.ResponseWriter, r *http.Request) {
+			tmpl3 := template.Must(template.ParseFiles("./static/planning.html"))
+			Relation := callRelation()
+			tmpl3.Execute(w, Relation)
+
+		})
+
+		http.HandleFunc("/description", func(w http.ResponseWriter, r *http.Request) {
+			// Récupérer l'ID de l'artiste sélectionné à partir des paramètres de requête
+			selectedArtistID := r.URL.Query().Get("id")
+
+			// Appeler l'API pour récupérer les informations sur l'artiste
+			response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists/" + selectedArtistID)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer response.Body.Close()
+
+			body, err := ioutil.ReadAll(response.Body)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			var artist Artist
+			err = json.Unmarshal(body, &artist)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			tmpl4 := template.Must(template.ParseFiles("./static/description.html"))
+
+			err = tmpl4.Execute(w, artist)
+			if err != nil {
+				log.Fatal(err)
+			}
+		})
+
+		http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
+			query := r.URL.Query().Get("id")
+			fmt.Println("Recherche de l'artiste : ", query)
+		})
+
+		http.HandleFunc("/contact", contactHandler)
+
 	})
-	http.HandleFunc("/description", func(w http.ResponseWriter, r *http.Request) {
-		// Récupérer l'ID de l'artiste sélectionné à partir des paramètres de requête
-		selectedArtistID := r.URL.Query().Get("id")
-
-		// Appeler l'API pour récupérer les informations sur l'artiste
-		response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists/" + selectedArtistID)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer response.Body.Close()
-
-		// Lire le corps de la réponse
-		body, err := ioutil.ReadAll(response.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// Désérialiser la réponse JSON dans une structure Artist
-		var artist Artist
-		err = json.Unmarshal(body, &artist)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// Charger le template HTML pour la description de l'artiste
-		tmpl3 := template.Must(template.ParseFiles("./static/description.html"))
-
-		// Exécuter le template en envoyant les informations sur l'artiste à la page HTML
-		err = tmpl3.Execute(w, artist)
-		if err != nil {
-			log.Fatal(err)
-		}
-	})
-
-	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
-		query := r.URL.Query().Get("query")
-		fmt.Println("Recherche de l'artiste : ", query)
-	})
-
-	http.HandleFunc("/contact", contactHandler)
-
 	http.ListenAndServe(":8080", nil)
+}
 
+func callRelation() Relations {
+	response, err := http.Get("https://groupietrackers.herokuapp.com/api/relation")
+	var relations Relations
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer response.Body.Close()
+
+	body, err := ioutil.ReadAll(response.Body)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	json.Unmarshal(body, &relations)
+
+	artist := callAPI()
+
+	for i, relation := range relations.Index {
+
+		relations.Index[i].RelArtist = artist[relation.ID-1]
+	}
+	// fmt.Println(relations)
+	return relations
 }
 
 func callAPI() Artists {
@@ -130,6 +194,16 @@ func selectArtist(artists Artists, name string) Artist {
 		}
 	}
 	return selectedArtist
+}
+
+func FilterArtistsByYear(artists Artists, startYear int) Artists {
+	var filteredArtists Artists
+	for _, artist := range artists {
+		if artist.CreationDate >= startYear && artist.CreationDate < startYear+10 {
+			filteredArtists = append(filteredArtists, artist)
+		}
+	}
+	return filteredArtists
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {

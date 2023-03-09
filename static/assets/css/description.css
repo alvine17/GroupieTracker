@@ -1,19 +1,23 @@
-.text{
-    text-align: center;
-    margin-top: auto;
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Roboto:wght@300&display=swap');
+
+.description-container{
+    font-family: 'Roboto', sans-serif;
+        text-align: center;
+        margin: 0 auto;
+         width: 100px;
+        width: 50%;
+        height: 70%;
+        border: black 2mm ridge;
+        font-weight: bold;
 }
 
-
-.rectangle{
-    /* border-style: solid; */
-    margin: 0 auto;
-    width: 100px;
-   width: 50%;
-   height: 70%;
-   border-style: solid;
+strong{
+    color: #01ce69;
+    font-weight: bold;
 }
 
-
-/* img{
-    margin-left: 10%;
-} */
+h1{
+    font-family: 'Roboto', sans-serif;
+        text-align: center;
+        color:#01ce69;
+}
