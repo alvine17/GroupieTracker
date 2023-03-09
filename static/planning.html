@@ -5,9 +5,47 @@
 	<link rel="stylesheet" href="/static/assets/css/planning.css">
 </head>
 <body>
+
+    <div id="container">
+        <div id="logo">GROUPIE TRACKER</div>
+        <div id="navbar">
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/planning">Planning</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    
    {{range .Index}}
-        {{.}}
+    
+   <img src="{{.RelArtist.Image}}">
+   <h1>{{.RelArtist.Name}}</h1>
+   {{range $key, $value := .DatesLocations}}
+   <h2>{{ (index $value 0) }} {{$key}}</h2>
+    {{end}}
    {{end}}
+   <footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col">
+                <h4>company</h4>
+                <ul>
+                    <li><a href="#">about us</a></li>
+                    <li><a href="#">our services</a></li>
+                    <li><a href="#">privacy policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>get help</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>
 

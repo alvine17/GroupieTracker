@@ -18,34 +18,14 @@ type Artist struct {
 
 type Artists []Artist
 
-// type Locationss struct {
-// 	Index []Locations
-// }
-
-// type Datess struct {
-// 	Index []Dates
-// }
-
-// type Dates struct {
-// 	ID    int      `json:"id"`
-// 	Dates []string `json:"dates"`
-// }
-// type Locations struct {
-// 	ID        int      `json:"id"`
-// 	Locations []string `json:"locations"`
-// }
-// type Datelocation struct {
-// 	Dates     Datess
-// 	Locations Locationss
-// 	ID        int `json:"id"`
-// }
-
 type Relations struct {
 	Index []Relation
 }
+
 type Relation struct {
 	ID             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
+	RelArtist      Artist
 }
 
 func main() {
@@ -83,7 +63,6 @@ func main() {
 	http.HandleFunc("/planning", func(w http.ResponseWriter, r *http.Request) {
 		tmpl3 := template.Must(template.ParseFiles("./static/planning.html"))
 		Relation := callRelation()
-		fmt.Println(Relation)
 		tmpl3.Execute(w, Relation)
 
 	})
@@ -116,6 +95,15 @@ func callRelation() Relations {
 		log.Fatal(err)
 	}
 	json.Unmarshal(body, &relations)
+
+	artist := callAPI()
+
+	for i, relation := range relations.Index {
+
+		relations.Index[i].RelArtist = artist[relation.ID-1]
+		//fmt.Println(relation.RelArtist)
+	}
+	fmt.Println(relations)
 	return relations
 }
 
