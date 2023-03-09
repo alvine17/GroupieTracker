@@ -10,9 +10,9 @@
         <div id="logo">GROUPIE TRACKER</div>
         <div id="navbar">
             <ul>
-                <li><a href="/index.html">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/planning">Planning</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/contact">Contact</a></li>
             </ul>
         </div>
     </br>
@@ -29,7 +29,7 @@
    <img src="{{.RelArtist.Image}}">
    
    <p><strong>Name :<h1>{{.RelArtist.Name}}</h1></strong>{{range $key, $value := .DatesLocations}}</p>
-   <p><strong>Date et Location:</strong> {{ (index $value 0) }} {{$key}}</p>
+   <p><strong>Date et Location:</strong> {{ (index $value 0) }} à {{$key}}</p>
     {{end}}
     </br> 
     </br>   
