@@ -90,51 +90,48 @@ func main() {
 			return
 		}
 
-		http.HandleFunc("/planning", func(w http.ResponseWriter, r *http.Request) {
-			tmpl3 := template.Must(template.ParseFiles("./static/planning.html"))
-			Relation := callRelation()
-			tmpl3.Execute(w, Relation)
-
-		})
-
-		http.HandleFunc("/description", func(w http.ResponseWriter, r *http.Request) {
-			// Récupérer l'ID de l'artiste sélectionné à partir des paramètres de requête
-			selectedArtistID := r.URL.Query().Get("id")
-
-			// Appeler l'API pour récupérer les informations sur l'artiste
-			response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists/" + selectedArtistID)
-			if err != nil {
-				log.Fatal(err)
-			}
-			defer response.Body.Close()
-
-			body, err := ioutil.ReadAll(response.Body)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			var artist Artist
-			err = json.Unmarshal(body, &artist)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			tmpl4 := template.Must(template.ParseFiles("./static/description.html"))
-
-			err = tmpl4.Execute(w, artist)
-			if err != nil {
-				log.Fatal(err)
-			}
-		})
-
-		http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
-			query := r.URL.Query().Get("query")
-			fmt.Println("Recherche de l'artiste : ", query)
-		})
-
-		http.HandleFunc("/contact", contactHandler)
+	})
+	http.HandleFunc("/planning", func(w http.ResponseWriter, r *http.Request) {
+		tmpl3 := template.Must(template.ParseFiles("./static/planning.html"))
+		Relation := callRelation()
+		tmpl3.Execute(w, Relation)
 
 	})
+	http.HandleFunc("/description", func(w http.ResponseWriter, r *http.Request) {
+		// Récupérer l'ID de l'artiste sélectionné à partir des paramètres de requête
+		selectedArtistID := r.URL.Query().Get("id")
+
+		// Appeler l'API pour récupérer les informations sur l'artiste
+		response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists/" + selectedArtistID)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer response.Body.Close()
+
+		body, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		var artist Artist
+		err = json.Unmarshal(body, &artist)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		tmpl4 := template.Must(template.ParseFiles("./static/description.html"))
+
+		err = tmpl4.Execute(w, artist)
+		if err != nil {
+			log.Fatal(err)
+		}
+	})
+	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
+		query := r.URL.Query().Get("query")
+		fmt.Println("Recherche de l'artiste : ", query)
+	})
+
+	http.HandleFunc("/contact", contactHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -207,8 +204,8 @@ func FilterArtistsByYear(artists Artists, startYear int) Artists {
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {
-	r.Method = "POST"
 	// Getting the data of the form
+	fmt.Println("zqsdqsdsfjzrnezqd,")
 	name := r.FormValue("name")
 	email := r.FormValue("email")
 	phone := r.FormValue("phone")
@@ -221,13 +218,5 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Message:", message)
 
 	// New page, when data are submitted
-	//fmt.Fprintf(w, "<h1>Thank you for contacting us!</h1>")
 	http.Redirect(w, r, "/static/thanks.html", http.StatusSeeOther)
-
-	tmpl, err := template.ParseFiles("./static/assets/map.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	tmpl.Execute(w, nil)
 }
