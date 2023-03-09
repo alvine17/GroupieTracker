@@ -15,16 +15,29 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </div>
-    
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+        <div class="planning-container" class="margin">
+
    {{range .Index}}
     
    <img src="{{.RelArtist.Image}}">
-   <h1>{{.RelArtist.Name}}</h1>
-   {{range $key, $value := .DatesLocations}}
-   <h2>{{ (index $value 0) }} {{$key}}</h2>
+   
+   <p><strong>Name :<h1>{{.RelArtist.Name}}</h1></strong>{{range $key, $value := .DatesLocations}}</p>
+   <p><strong>Date et Location:</strong> {{ (index $value 0) }} {{$key}}</p>
     {{end}}
+    </br> 
+    </br>   
+    </br>
    {{end}}
-   <footer class="footer">
+
+</div>
+   <!-- <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="footer-col">
@@ -44,7 +57,7 @@
             
         </div>
     </div>
-</footer>
+</footer> -->
 
 </body>
 </html>
