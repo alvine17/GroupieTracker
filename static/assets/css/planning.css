@@ -179,3 +179,30 @@ ul{
     width: 100%;
   }
   }
+
+  @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Roboto:wght@300&display=swap');
+.planning-container{
+    font-family: 'Roboto', sans-serif;
+        text-align: center;
+        margin: 0 auto;
+         width: 100px;
+        width: 50%;
+        height: 100vh;
+        font-weight: bold;
+        align-items: center;
+}
+.margin {
+    margin-top: 150px;
+}
+
+strong{
+    color: #01ce69;
+    font-weight: bold;
+}
+
+
+h1{
+    font-family: 'Roboto', sans-serif;
+        text-align: center;
+        color:#01ce69;
+}

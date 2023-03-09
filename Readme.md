@@ -7,40 +7,12 @@ This project aims to build a website using a music API, which returns the names 
 - You need to use Visual Studio Code preferably in order to be able to launch the project.
 
 
-## Usage
-Instructions on how to use the project once installed
-
-## Contributing
-Instructions for individuals who want to contribute to the project
-
-## License
-Information about the license under which the project is published
-
 ## API Reference
 
-#### Get all items
-
-```http
-  GET /api/items
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
-
-#### Get item
-
-```http
-  GET /api/items/${id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
-
-#### add(num1, num2)
-
-Takes two numbers and returns the sum.
+ API Artiste: "https://groupietrackers.herokuapp.com/api/artists"
+ API Locations: "https://groupietrackers.herokuapp.com/api/locations"
+ API Dates: "https://groupietrackers.herokuapp.com/api/dates"
+ API Relation: "https://groupietrackers.herokuapp.com/api/relation
 
 ## Authors
 
