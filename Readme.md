@@ -4,10 +4,8 @@ This project aims to build a website using a music API, which returns the names 
 - The goal is to improve on different languages such as Golang, HTML, or CSS.
 
 ## Prerequisites
-- The necessary elements to install and run the project
+- You need to use Visual Studio Code preferably in order to be able to launch the project.
 
-## Installation
-Detailed steps to install the project
 
 ## Usage
 Instructions on how to use the project once installed

@@ -18,29 +18,34 @@ type Artist struct {
 
 type Artists []Artist
 
-// type location []Locations
-type Locationss struct {
-	Index []Locations
-}
-type Datess struct {
-	Index []Dates
-}
-
-// type Locations struct {
-// 	Index []locations
+// type Locationss struct {
+// 	Index []Locations
 // }
 
-type Dates struct {
-	ID    int      `json:"id"`
-	Dates []string `json:"dates"`
+// type Datess struct {
+// 	Index []Dates
+// }
+
+// type Dates struct {
+// 	ID    int      `json:"id"`
+// 	Dates []string `json:"dates"`
+// }
+// type Locations struct {
+// 	ID        int      `json:"id"`
+// 	Locations []string `json:"locations"`
+// }
+// type Datelocation struct {
+// 	Dates     Datess
+// 	Locations Locationss
+// 	ID        int `json:"id"`
+// }
+
+type Relations struct {
+	Index []Relation
 }
-type Locations struct {
-	ID        int      `json:"id"`
-	Locations []string `json:"locations"`
-}
-type Datelocation struct {
-	Dates     Datess
-	Locations Locationss
+type Relation struct {
+	ID             int                 `json:"id"`
+	DatesLocations map[string][]string `json:"datesLocations"`
 }
 
 func main() {
@@ -74,21 +79,12 @@ func main() {
 			selectedArtist5,
 		})
 	})
-	http.HandleFunc("/artists", func(w http.ResponseWriter, r *http.Request) {
-		tmpl2 := template.Must(template.ParseFiles("./static/artists.html"))
-		tmpl2.Execute(w, global)
-	})
 
 	http.HandleFunc("/planning", func(w http.ResponseWriter, r *http.Request) {
 		tmpl3 := template.Must(template.ParseFiles("./static/planning.html"))
-		dates := callDate()
-		locations := callLocation()
-		Datelocation := Datelocation{
-			Dates:     dates,
-			Locations: locations,
-		}
-		fmt.Println(dates)
-		tmpl3.Execute(w, Datelocation)
+		Relation := callRelation()
+		fmt.Println(Relation)
+		tmpl3.Execute(w, Relation)
 
 	})
 
@@ -104,9 +100,9 @@ func main() {
 
 }
 
-func callLocation() Locationss {
-	response, err := http.Get("https://groupietrackers.herokuapp.com/api/locations")
-	var locations Locationss
+func callRelation() Relations {
+	response, err := http.Get("https://groupietrackers.herokuapp.com/api/relation")
+	var relations Relations
 
 	if err != nil {
 		log.Fatal(err)
@@ -119,8 +115,8 @@ func callLocation() Locationss {
 	if err != nil {
 		log.Fatal(err)
 	}
-	json.Unmarshal(body, &locations)
-	return locations
+	json.Unmarshal(body, &relations)
+	return relations
 }
 
 func callAPI() Artists {
@@ -143,26 +139,26 @@ func callAPI() Artists {
 	return artist
 }
 
-func callDate() Datess {
-	response, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
-	var dates Datess
+// func callDate() Datess {
+// 	response, err := http.Get("https://groupietrackers.herokuapp.com/api/dates")
+// 	var dates Datess
 
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	defer response.Body.Close()
+// 	defer response.Body.Close()
 
-	body, err := ioutil.ReadAll(response.Body)
+// 	body, err := ioutil.ReadAll(response.Body)
 
-	if err != nil {
-		log.Fatal(err)
-	}
-	json.Unmarshal(body, &dates)
-	// fmt.Println(dates)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	json.Unmarshal(body, &dates)
+// 	// fmt.Println(dates)
 
-	return dates
-}
+// 	return dates
+// }
 
 func selectArtist(artists Artists, name string) Artist {
 	var selectedArtist Artist

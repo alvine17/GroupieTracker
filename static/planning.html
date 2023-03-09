@@ -5,9 +5,9 @@
 	<link rel="stylesheet" href="/static/assets/css/planning.css">
 </head>
 <body>
-
-    <h1>{{.Dates}}</h1>
-    <h2>{{.Locations}}</h2>
+   {{range .Index}}
+        {{.}}
+   {{end}}
 </body>
 </html>
 
