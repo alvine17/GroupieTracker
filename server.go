@@ -128,7 +128,7 @@ func main() {
 		})
 
 		http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
-			query := r.URL.Query().Get("id")
+			query := r.URL.Query().Get("query")
 			fmt.Println("Recherche de l'artiste : ", query)
 		})
 
