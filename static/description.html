@@ -3,16 +3,16 @@
 <head>
     <title>Document</title>
     <link  href="/static/assets/css/description.css" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Description de l'artiste</h1>
+    <h1>{{.Name}}</h1>
+	<button class="button-56" onclick="window.location.href='/artists'">RETOUR</button>
 	<div class="description-container">
-		<p><strong>Nom de l'artiste :</strong> {{.Name}}</p>
-		<p><strong>Membres :</strong> {{range .Members}}{{.}}, {{end}}</p>
-		<p><strong>Date de création :</strong> {{.CreationDate}}</p>
-		<p><strong>Premier album :</strong> {{.FirstAlbum}}</p>
-		<p><strong>Date de concert :</strong> {{.ConcertDate}}</p>
-		<p><strong>Relation :</strong> {{.Relation}}</p>
+		<img src="{{.Image}}" alt="{{.Name}}" value="{{.Name}}">
+		<p><strong>Members :</strong> {{range .Members}}{{.}}, {{end}}</p>
+		<p><strong>Creation date :</strong> {{.CreationDate}}</p>
+		<p><strong>First album :</strong> {{.FirstAlbum}}</p>
 	</div>
 </body>
 </html>

@@ -15,23 +15,30 @@
       </div>
     </div>
     <div class="slidecontainer">
-        <p>First Album :</p> 
-        <input type="range" value="25">
+        <p>Members:</p> 
+        <input type="range" value="10">
       </div>
       <div class="box">
-        Creation Date
-        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-  <label for="vehicle1"> 1950 </label><br>
-  <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-  <label for="vehicle2"> 1980</label><br>
-  <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
-  <label for="vehicle3"> 1990 </label><br><br>
-  <input type="checkbox" id="vehicle4" name="vehicle3" value="Boat">
-  <label for="vehicle4"> 2000 </label><br><br>
-  <input type="checkbox" id="vehicle4" name="vehicle3" value="Boat">
-  <label for="vehicle4"> 2010+ </label><br><br>
+        <p>Filter by Creation Date:</p>
+        <form action="/artists" method="get">
+          <input type="checkbox" id="1950" name="creation_date" value="1950">
+          <label for="1950"> 1950-1959</label><br>
+          <input type="checkbox" id="1960" name="creation_date" value="1960">
+          <label for="1960"> 1960-1969</label><br>
+          <input type="checkbox" id="1970" name="creation_date" value="1970">
+          <label for="1970"> 1970-1979</label><br>
+          <input type="checkbox" id="1980" name="creation_date" value="1980">
+          <label for="1980"> 1980-1989</label><br>
+          <input type="checkbox" id="1990" name="creation_date" value="1990">
+          <label for="1990"> 1990-1999</label><br>
+          <input type="checkbox" id="2000" name="creation_date" value="2000">
+          <label for="2000"> 2000-2009</label><br>
+          <input type="checkbox" id="2010" name="creation_date" value="2010">
+          <label for="2010"> 2010-2019</label><br>
+          <button type="submit">Filter</button>
+        </form>
       </div>
-
+      
       <form action="/search" method="GET">
     <input type="text" name="query" placeholder="Recherchez un artiste...">
     <button type="submit">Rechercher</button>

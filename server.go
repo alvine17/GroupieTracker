@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"text/template"
 )
 
@@ -53,9 +54,33 @@ func main() {
 		})
 	})
 	http.HandleFunc("/artists", func(w http.ResponseWriter, r *http.Request) {
-		tmpl2 := template.Must(template.ParseFiles("./static/artists.html"))
-		tmpl2.Execute(w, global)
+		q := r.URL.Query()
+		creationDates, ok := q["creation_date"]
+
+		// Filtrage des artistes selon les années de création
+		filteredArtists := global
+		if ok {
+			for _, year := range creationDates {
+				startYear, _ := strconv.Atoi(year)
+				filteredArtists = FilterArtistsByYear(filteredArtists, startYear)
+			}
+		}
+
+		// Génération du template HTML avec les artistes filtrés
+		tmpl2, err := template.ParseFiles("./static/artists.html")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		err = tmpl2.Execute(w, filteredArtists)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
 	})
+
 	http.HandleFunc("/description", func(w http.ResponseWriter, r *http.Request) {
 		// Récupérer l'ID de l'artiste sélectionné à partir des paramètres de requête
 		selectedArtistID := r.URL.Query().Get("id")
@@ -128,4 +153,14 @@ func selectArtist(artists Artists, name string) Artist {
 		}
 	}
 	return selectedArtist
+}
+
+func FilterArtistsByYear(artists Artists, startYear int) Artists {
+	var filteredArtists Artists
+	for _, artist := range artists {
+		if artist.CreationDate >= startYear && artist.CreationDate < startYear+10 {
+			filteredArtists = append(filteredArtists, artist)
+		}
+	}
+	return filteredArtists
 }
