@@ -149,4 +149,11 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 	// New page, when data are submitted
 	//fmt.Fprintf(w, "<h1>Thank you for contacting us!</h1>")
 	http.Redirect(w, r, "/static/thanks.html", http.StatusSeeOther)
+
+	tmpl, err := template.ParseFiles("./static/assets/map.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	tmpl.Execute(w, nil)
 }
